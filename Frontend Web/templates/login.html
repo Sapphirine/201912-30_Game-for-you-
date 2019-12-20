@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style type="text/css">
+        body {background-image: url(/static/login_backbround.jpeg);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;}
+    </style>
+</head>
+
+{% block functions %}
+        <script type="text/javascript">
+            function checkPassword() {
+                var usernameInput = document.getElementById("username");
+                var passwordInput = document.getElementById("password");
+                var url = "{{ url_for('homepage', username='tmp1', password='tmp2')}}";
+                var result_tmp = url.replace('tmp1', usernameInput.value);
+                var result = result_tmp.replace('tmp2', passwordInput.value);
+                window.location = result;
+            }
+            function creatAccount() {
+                var usernameInput = document.getElementById("username");
+                var passwordInput = document.getElementById("password");
+                var url = "{{ url_for('signup', username='tmp1', password='tmp2')}}";
+                var result_tmp = url.replace('tmp1', usernameInput.value);
+                var result = result_tmp.replace('tmp2', passwordInput.value);
+                window.location = result;
+            }
+        </script>
+{% endblock %}
+
+<body>
+
+{% block content %}
+<div id="content">
+<link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation|3d-float|destruction|static">
+<center>
+    <br><br><br><br><br><br><br><br>
+    <div class="font-effect-fire-animation" style="font-size: 80px">Game for you !</div>
+    <br><br>
+    <div class="font-effect-3d-float" style="font-size: 20px; color: black;">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" size="50"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" size="50"><br><br>
+    </div>
+    <button onclick="checkPassword()" class="font-effect-3d-float" style="font-size: 15px; color: black; background: white; opacity: 0.9;"> Sign In </button>
+    <br><br>
+    <button onclick="creatAccount()" class="font-effect-3d-float" style="font-size: 15px; color: black;  background: white; opacity: 0.9;"> Create Account </button>
+    <br>
+
+    </center>
+</div>
+{% endblock %}
+
+</body>
+</html>

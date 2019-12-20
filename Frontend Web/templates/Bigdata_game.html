@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game information</title>
+    <style type="text/css">
+        body {background-image: url(../../static/game_info.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;}
+    </style>
+</head>
+
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ url_for('static', filename='Bigdata.js')}}"></script>
+    <script type="text/javascript">
+        function getSearchResult() {
+            var radios = document.getElementsByName("search_opt");
+            var checkedCriteria;
+            for (var i = 0, length = radios.length; i<length; i++){
+                if (radios[i].checked){
+                    checkedCriteria = radios[i].value;
+                break;
+                }
+            }
+            var search_result_url;
+            if (checkedCriteria == "search_by_platform"){
+                search_result_url = "{{ url_for('searchResultByPlatform', search_key='tmp')}}";
+            } else{
+                search_result_url = "{{ url_for('searchResultByName', search_key='tmp')}}";
+            }
+            var search_input = document.getElementById("search_keyword");
+            var result_url = search_result_url.replace('tmp', search_input.value);
+            window.location = result_url;
+        }
+        </script>
+{% endblock %}
+
+<body>
+<!--The search again function-->
+<div id="search_again">
+
+    <input id="search_keyword" type="text" name="search" value="" style="width:46%;height: 40px;border-radius: 8px;opacity: 0.6;
+        font-size: 20px;">
+    <div id="logo" style="float:left; padding-right: 15px">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation|3d-float|destruction|static">
+        <div class="font-effect-fire-animation" style="font-size: 30px">Game for you !</div>
+    </div>
+    <button onclick="getSearchResult()" type="submit" style="width: 47px;font-size: 20px;height: 45px;border-radius: 80px;background: white;opacity: 0.9;"> 🔍</button>
+    <br>
+        <form action="">
+            <div class="font-effect-3d-float"; style="font-size: 19px; color: black; padding-left: 230px">
+                <input type="radio" name="search_opt" value="search_by_name"> Search By Name
+                <input type="radio" name="search_opt" value="search_by_platform"> Search By Platform
+            </div>
+        </form>
+</div>
+
+{% block content %}
+    <div id="Game_info" class="font-effect-3d-float" style="font-size: 25px; color: black; padding-left: 50px">
+        <h1>{{ target_game.title }}</h1>
+        <ul id="other_info" style="font-size: 25px">
+            <li> Supported Platform:&nbsp&nbsp{{ target_game.platform }}</li>
+            <li> Year of Release:&nbsp&nbsp{{ target_game.year }}</li>
+            <li> Genre:&nbsp&nbsp{{ target_game.genre }}</li>
+            <li> Publisher:&nbsp&nbsp{{ target_game.publisher }}</li>
+            <li> Score:&nbsp&nbsp {{ target_game.userscore }}
+            <li> Numbers of players:&nbsp&nbsp {{ target_game.no_Players }} </li>
+            <li> Labels: &nbsp&nbsp{{ target_game.labels }} </li>
+        </ul>
+    </div>
+
+    <div id="rec" class="font-effect-3d-float" style="font-size: 25px; color: black; padding-left: 50px">
+        <aside>
+        <div id="similar_games">
+            <p style="font-size: 25px; font-weight: bold;">Game recommendation:</p>
+            <ul id="similar_games" style="font-size: 25px">
+                {% for g_name in target_game.recommendation %}
+                    <li style="font-size: 25px"><a href="{{ url_for('game_name', game_name=g_name)}}">
+                        {{ g_name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        </aside>
+    </div>
+{% endblock %}
+
+</body>
+</html>

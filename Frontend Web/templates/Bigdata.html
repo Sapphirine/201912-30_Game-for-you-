@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bigdata</title>
+    <style type="text/css">
+        body {background-image: url(../../static/background.jpeg);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;}
+        input {height: 30px;}
+        button {-webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+            padding: 9px 16px;
+            text-align: center;
+            background-color: #fefdff;
+            color: #1924cc;
+            border-radius:5px;}
+    </style>
+</head>
+
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ url_for('static', filename='Bigdata.js')}}"></script>
+    <script type="text/javascript">
+        function getSearchResult() {
+            var radios = document.getElementsByName("search_opt");
+            var checkedCriteria;
+            for (var i = 0, length = radios.length; i<length; i++){
+                if (radios[i].checked){
+                    checkedCriteria = radios[i].value;
+                break;
+                }
+            }
+            var search_result_url;
+            if (checkedCriteria == "search_by_platform"){
+                search_result_url = "{{ url_for('searchResultByPlatform', search_key='tmp')}}";
+            } else{
+                search_result_url = "{{ url_for('searchResultByName', search_key='tmp')}}";
+            }
+            var search_input = document.getElementById("search_keyword");
+            var result_url = search_result_url.replace('tmp', search_input.value);
+            window.location = result_url;
+        }
+        </script>
+{% endblock %}
+
+<body>
+<br><br><br><br><br><br><br><br><br><br>
+
+<div style="text-align: center;">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Rancho&effect=fire-animation|3d-float|ice|static">
+    <div class="font-effect-fire-animation" style="font-size: 80px">Game for you !</div>
+    <br><br>
+    <div>
+        <input id="search_keyword" class="font-effect-ice" type="text" name="s" size="50" style="color: black; font-size: 22px">
+        <button onclick="getSearchResult()" class="font-effect-ice" type="submit" style="width: 50px;height: 50px;border-radius: 70px;font-size: 20px;background: white;opacity: 0.9;"> 🔍</button>
+        <br><br>
+        <form action="">
+            <div class="font-effect-3d-float" style="font-size: 19px; color: black;">
+                <input type="radio" name="search_opt" value="search_by_name"> Search By Name
+                <input type="radio" name="search_opt" value="search_by_platform"> Search By Platform
+            </div>
+        </form>
+    </div>
+    <br>
+    <div class="font-effect-3d-float" style="font-size: 20px; color: black;">Please enter your favorite game name</div>
+</div>
+<br><br><br><br><br><br><br><br><br>
+</body>
+    <p style="margin-left: 43%;font-size: 20px; color: black;">
+    <a href="mailto:fy2252@columbia.edu?Subject=Help" target="_top" class="font-effect-3d-float" style="font-size: 16px; color: black;text-align: center">Email Us With Any Questions</a>
+    </p>
+
+</html>
